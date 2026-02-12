@@ -1,0 +1,90 @@
+
+name: Build RBS Textile Binaries
+on:
+  workflow_dispatch: # Allows you to run this manually online
+  push:
+   RBS TEXTILE: ULTIMATE OFFLINE DEPLOYMENT GUIDE
+==============================================
+
+To convert these files into a standalone .exe (Windows) or .AppImage (Linux), 
+follow this 5-minute one-time process.
+
+STEP 1: PREPARE YOUR COMPUTER
+-----------------------------
+1. Download and install Node.js from https://nodejs.org (LTS Version).
+   *Note: This is only needed for the 5-minute build process. You can 
+    uninstall it after your .exe is created.*
+
+STEP 2: PROJECT SETUP
+---------------------
+1. Create a new folder on your computer named "RBS_Textile_Source".
+2. Copy all files from this project (index.html, App.tsx, main.js, etc.) 
+   into that folder.
+
+STEP 3: INITIALIZE (THE "PACKING" PROCESS)
+------------------------------------------
+1. Open your computer's terminal (Command Prompt or PowerShell on Windows).
+2. Type 'cd ' and then drag your "RBS_Textile_Source" folder into the window.
+3. Run this command:
+   npm install
+
+STEP 4: GENERATE THE BINARY (.EXE)
+----------------------------------
+1. In the same terminal, run:
+   npm run make
+
+STEP 5: FIND YOUR SOFTWARE
+--------------------------
+1. Look inside your folder for a new sub-folder named "out".
+2. Inside "out/make/squirrel.windows/x64/", you will find:
+   "RBS Textile Setup.exe"
+3. Copy this .exe to any computer, install it, and use it 100% OFFLINE.
+
+---------------------------------------------------------------------------
+SUPPORT: This system uses Electron 30.0 for native OS integration and 
+IndexedDB for local disk persistence. Data is stored in:
+%AppData%/Roaming/rbs-textile-enterprise/
+--------------------------------------------------------------------------- branches: [ main ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        # Run on both Windows and Linux to get both versions
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Electron Forge Make
+        run: npm run make
+
+      - name: Upload Windows Binaries (EXE & ZIP)
+        if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: RBS-Textile-Windows-Installers
+          path: |
+            out/make/squirrel.windows/x64/*.exe
+            out/make/zip/win32/x64/*.zip
+
+      - name: Upload Linux Binaries (DEB, RPM & ZIP)
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: RBS-Textile-Linux-Installers
+          path: |
+            out/make/deb/x64/*.deb
+            out/make/rpm/x64/*.rpm
+            out/make/zip/linux/x64/*.zip
