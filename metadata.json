@@ -1,0 +1,7 @@
+{
+  "name": "RBS Textile - Factory Management",
+  "description": "An offline-first desktop management software for T-Shirt stitching factories, featuring worker tracking, lot management, and automated stage-wise jobwork payments.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

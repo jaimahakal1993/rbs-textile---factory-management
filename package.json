@@ -1,0 +1,58 @@
+
+{
+  "name": "rbs-textile-enterprise",
+  "version": "1.0.0",
+  "description": "RBS Textile - Factory Management Desktop Software",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "name": "RBS Textile",
+        "executableName": "rbs-textile"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "rbs_textile_enterprise"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin",
+            "linux",
+            "win32"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {
+            "options": {
+              "maintainer": "RBS Textile",
+              "homepage": "https://rbs-textile.local",
+              "categories": ["Office", "Finance"]
+            }
+          }
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.0.0",
+    "@electron-forge/maker-squirrel": "^7.0.0",
+    "@electron-forge/maker-zip": "^7.0.0",
+    "@electron-forge/maker-deb": "^7.0.0",
+    "@electron-forge/maker-rpm": "^7.0.0",
+    "electron": "^30.0.0"
+  }
+}

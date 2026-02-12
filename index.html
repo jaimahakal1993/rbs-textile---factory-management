@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBS Textile - Industrial ERP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #eaeff5;
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Fixed Mono for data */
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Industrial Scrollbars */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #64748b; border: 2px solid #f1f5f9; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+        /* Print Override */
+        @media print {
+            body { background: white !important; }
+            .no-print { display: none !important; }
+            #root > div:not(.print-container) { display: none !important; }
+            .print-container { 
+                display: block !important; 
+                position: absolute;
+                top: 0; left: 0; width: 100%;
+                background: white;
+            }
+        }
+        .print-container { display: none; }
+
+        /* Removal of Modern Themes (Gradients/Glass) */
+        .glass-panel {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+        }
+
+        /* Industrial Button Press Effect */
+        .action-button {
+            transition: all 0.1s ease;
+        }
+        .action-button:active {
+            transform: translateY(1px);
+            filter: brightness(0.9);
+        }
+
+        /* High Visibility Table Borders */
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #e2e8f0; }
+
+        /* Maintenance Animations */
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 8s linear infinite;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "recharts": "https://esm.sh/recharts@^3.7.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

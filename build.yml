@@ -1,0 +1,44 @@
+
+name: Build RBS Textile Binaries
+on:
+  workflow_dispatch: # Allows you to run this manually online
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        # Run on both Windows and Linux to get both versions
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Electron Forge Make
+        run: npm run make
+
+      - name: Upload Artifacts (Windows)
+        if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: RBS-Textile-Windows-EXE
+          path: out/make/squirrel.windows/x64/*.exe
+
+      - name: Upload Artifacts (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: RBS-Textile-Linux-DEB
+          path: out/make/deb/x64/*.deb
